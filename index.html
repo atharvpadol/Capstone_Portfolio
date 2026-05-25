@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atharv Ranganath Padol | Digital Portfolio</title>
+  <style>
+    :root{
+      --bg:#0f172a;
+      --bg2:#111827;
+      --card:rgba(255,255,255,.08);
+      --card2:rgba(255,255,255,.12);
+      --text:#f8fafc;
+      --muted:rgba(248,250,252,.75);
+      --line:rgba(255,255,255,.12);
+      --accent:#7c3aed;
+      --accent2:#06b6d4;
+      --accent3:#f59e0b;
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+      --radius:28px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(124,58,237,.35), transparent 28%),
+        radial-gradient(circle at top right, rgba(6,182,212,.25), transparent 26%),
+        radial-gradient(circle at bottom left, rgba(245,158,11,.14), transparent 24%),
+        linear-gradient(135deg, #020617 0%, #0f172a 45%, #111827 100%);
+      color:var(--text);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+    .grain:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.08;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+      mix-blend-mode:soft-light;
+    }
+    .container{width:min(1200px, calc(100% - 32px)); margin:0 auto;}
+    .nav{
+      position:sticky; top:16px; z-index:40;
+      margin:16px auto 0;
+      backdrop-filter: blur(20px);
+      background:rgba(15,23,42,.55);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:10px 16px;
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+      box-shadow:var(--shadow);
+    }
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.04em}
+    .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2)); box-shadow:0 0 20px rgba(124,58,237,.8)}
+    .nav a{color:var(--muted); text-decoration:none; margin:0 10px; font-size:.95rem}
+    .nav a:hover{color:white}
+    .hero{
+      padding:34px 0 10px;
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:28px;
+      align-items:center;
+      min-height:calc(100vh - 96px);
+    }
+    .hero-card, .panel{
+      background:linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.05));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+    .hero-card{padding:34px; position:relative; overflow:hidden}
+    .hero-card:after{
+      content:"";
+      position:absolute; inset:auto -10% -30% auto;
+      width:340px; height:340px; border-radius:50%;
+      background:radial-gradient(circle, rgba(124,58,237,.35), transparent 65%);
+      filter:blur(10px);
+    }
+    .eyebrow{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 14px; border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size:.9rem;
+      margin-bottom:18px;
+    }
+    .title{
+      font-size:clamp(2.6rem, 6vw, 5.2rem);
+      line-height:.95;
+      margin:0 0 16px;
+      font-weight:900;
+      letter-spacing:-.04em;
+    }
+    .subtitle{
+      font-size:1.08rem;
+      line-height:1.8;
+      color:var(--muted);
+      max-width:62ch;
+      margin:0 0 22px;
+    }
+    .pill-row{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0 28px}
+    .pill{
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid var(--line);
+      color:var(--text);
+      font-size:.92rem;
+    }
+    .hero-actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:8px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:13px 18px;
+      border-radius:16px;
+      text-decoration:none;
+      border:1px solid transparent;
+      transition:.25s ease;
+      font-weight:700;
+    }
+    .btn.primary{background:linear-gradient(135deg,var(--accent),#2563eb); color:white; box-shadow:0 12px 40px rgba(124,58,237,.35)}
+    .btn.secondary{background:rgba(255,255,255,.07); color:var(--text); border-color:var(--line)}
+    .btn:hover{transform:translateY(-2px)}
+    .portrait{
+      padding:18px;
+      display:flex; flex-direction:column; gap:16px; align-items:center; justify-content:center;
+    }
+    .portrait img{
+      width:min(100%, 420px);
+      aspect-ratio: 4 / 5;
+      object-fit:cover;
+      border-radius:26px;
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:0 30px 70px rgba(0,0,0,.45);
+      transform:rotate(1.2deg);
+    }
+    .portrait .meta{
+      width:100%;
+      display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px;
+    }
+    .stat{
+      padding:16px;
+      border-radius:20px;
+      background:rgba(255,255,255,.07);
+      border:1px solid var(--line);
+    }
+    .stat b{display:block; font-size:1.2rem; margin-bottom:6px}
+    .stat span{color:var(--muted); font-size:.92rem}
+    section{padding:34px 0}
+    .section-head{
+      display:flex; justify-content:space-between; align-items:end; gap:14px;
+      margin-bottom:18px;
+    }
+    h2{
+      font-size:clamp(1.6rem, 3vw, 2.4rem);
+      margin:0;
+      letter-spacing:-.03em;
+    }
+    .section-head p{margin:0; color:var(--muted); max-width:70ch; line-height:1.7}
+    .grid-2{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px}
+    .grid-3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px}
+    .card{
+      padding:22px;
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.045));
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card h3{margin:0 0 10px; font-size:1.15rem}
+    .card p, .card li{color:var(--muted); line-height:1.75}
+    .card ul{margin:12px 0 0; padding-left:18px}
+    .timeline{position:relative; padding-left:22px}
+    .timeline:before{
+      content:""; position:absolute; left:8px; top:8px; bottom:8px;
+      width:2px; background:linear-gradient(to bottom, var(--accent), var(--accent2));
+      opacity:.6;
+    }
+    .timeline-item{position:relative; padding:0 0 20px 16px}
+    .timeline-item:before{
+      content:""; position:absolute; left:-1px; top:8px; width:14px; height:14px; border-radius:50%;
+      background:linear-gradient(135deg,var(--accent),var(--accent2)); box-shadow:0 0 0 5px rgba(124,58,237,.15);
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 12px; border-radius:999px; font-size:.82rem;
+      background:rgba(255,255,255,.08); border:1px solid var(--line); color:var(--muted);
+      margin:0 8px 8px 0;
+    }
+    .mini{
+      font-size:.88rem;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      margin-bottom:10px;
+    }
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+    }
+    .shot{
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      box-shadow:var(--shadow);
+    }
+    .shot img{width:100%; height:220px; object-fit:cover; display:block}
+    .shot .cap{padding:12px 14px; font-size:.92rem; color:var(--muted)}
+    .footer{
+      padding:24px 0 50px;
+      color:var(--muted);
+      text-align:center;
+    }
+    .thankyou{
+      text-align:center;
+      padding:26px 20px;
+      border-radius:28px;
+      border:1px solid var(--line);
+      background:linear-gradient(135deg, rgba(124,58,237,.12), rgba(6,182,212,.08));
+      box-shadow:var(--shadow);
+      font-weight:800;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
+    @media (max-width: 980px){
+      .hero, .grid-2, .grid-3{grid-template-columns:1fr}
+      .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .nav{border-radius:24px; flex-direction:column; align-items:flex-start}
+      .nav nav{display:flex; flex-wrap:wrap; gap:6px 10px}
+      .hero{min-height:auto; padding-top:12px}
+    }
+    @media (max-width: 640px){
+      .container{width:min(100% - 20px, 1200px)}
+      .hero-card, .card{padding:18px}
+      .portrait .meta{grid-template-columns:1fr}
+      .gallery{grid-template-columns:1fr}
+      .shot img{height:260px}
+      .title{font-size:2.5rem}
+    }
+  </style>
+</head>
+<body class="grain">
+  <div class="container">
+    <header class="nav">
+      <div class="brand"><span class="dot"></span> Atharv Portfolio</div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#education">Education</a>
+        <a href="#journey">Journey</a>
+        <a href="#projects">Projects</a>
+        <a href="#internships">Internships</a>
+        <a href="#certifications">Certifications</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-card">
+        <div class="eyebrow">Digital Portfolio  </div>
+        <h1 class="title">Atharv Ranganath Padol</h1>
+        <p class="subtitle">
+          Computer Engineering student at MIT Academy of Engineering, Pune, with a strong interest in software development,
+          Artificial Intelligence, data-driven systems, and modern digital solutions. This portfolio is designed from the details
+          in your graduation book and presents your academic story in a modern, attractive format. 
+        </p>
+        <div class="pill-row">
+          <span class="pill">PRN: 202201040144</span>
+          <span class="pill">Department: Computer</span>
+          <span class="pill">B.Tech (2022–2026)</span>
+          <span class="pill">MIT Academy of Engineering</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn primary" href="#projects">View Projects</a>
+          <a class="btn secondary" href="#certifications">See Certifications</a>
+        </div>
+      </div>
+
+      <aside class="hero-card portrait">
+        <img src="assets/atharv_profile.jpeg" alt="Atharv Padol profile photo">
+        <div class="meta">
+          <div class="stat"><b>3+</b><span>Projects shown in book</span></div>
+          <div class="stat"><b>5</b><span>Certifications / badges</span></div>
+          <div class="stat"><b>2</b><span>Internship experiences</span></div>
+          <div class="stat"><b>1</b><span>Graduation journey</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="about">
+      <div class="section-head">
+        <div>
+          <h2>About Me</h2>
+          <p>The summary below follows the text from page 2 of your graduation book, highlighting your interests, mindset, and career goal. </p>
+        </div>
+      </div>
+      <div class="card">
+        <p>
+          I am Atharv Ranganath Padol, a Computer Engineering student at MIT Academy of Engineering, Pune, with a strong interest in technology,
+          innovation, and problem-solving. I am passionate about software development, Artificial Intelligence, data-driven systems, and modern digital
+          solutions that create real-world impact.
+        </p>
+        <p>
+          Throughout my academic journey, I have continuously focused on improving my technical knowledge while balancing communication, teamwork,
+          and leadership skills. I enjoy learning new tools, exploring emerging technologies, and taking on challenges that help me grow both personally
+          and professionally.
+        </p>
+        <p>
+          I believe in consistency, discipline, and continuous improvement. My goal is to build a successful career in the IT industry while contributing
+          to meaningful projects and creating value through technology.
+        </p>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="section-head">
+        <div>
+          <h2>Education</h2>
+          <p>The education entries are taken from page 3 of the PDF and kept in chronological order. </p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="mini">2020 – 2022</div>
+          <h3>Vanateya Junior College Of Science, Niphad</h3>
+          <p>Higher Secondary Education (XII)</p>
+          <p>Pune, Maharashtra</p>
+        </div>
+        <div class="card">
+          <div class="mini">2022 – 2026</div>
+          <h3>MIT Academy of Engineering, Pune</h3>
+          <p>Bachelor of Technology</p>
+          <p>Computer Engineering - B.Tech</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="journey">
+      <div class="section-head">
+        <div>
+          <h2>My Journey</h2>
+          <p>This section mirrors the progression in page 4: first-year foundations, second-year core subjects, third-year advanced topics, and final-year placement and project focus. </p>
+        </div>
+      </div>
+      <div class="card timeline">
+        <div class="timeline-item">
+          <h3>First Year</h3>
+          <span class="badge">Basics of Programming</span>
+          <span class="badge">C / Python Fundamentals</span>
+          <span class="badge">Engineering Mathematics</span>
+          <span class="badge">Communication Skills</span>
+          <span class="badge">Learning Discipline</span>
+        </div>
+        <div class="timeline-item">
+          <h3>Second Year</h3>
+          <span class="badge">Data Structures</span>
+          <span class="badge">DBMS</span>
+          <span class="badge">OOP Concepts</span>
+          <span class="badge">Web Development Basics</span>
+          <span class="badge">Team Projects</span>
+        </div>
+        <div class="timeline-item">
+          <h3>Third Year</h3>
+          <span class="badge">Advanced Programming</span>
+          <span class="badge">AI / ML Concepts</span>
+          <span class="badge">Internship Preparation</span>
+          <span class="badge">Real-world Projects</span>
+          <span class="badge">Technical Growth</span>
+        </div>
+        <div class="timeline-item">
+          <h3>Final Year</h3>
+          <span class="badge">Major Project</span>
+          <span class="badge">Placement Preparation</span>
+          <span class="badge">Career Planning</span>
+          <span class="badge">Graduation Milestone</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-head">
+        <div>
+          <h2>Projects</h2>
+          <p>All three project blocks are represented here: the mini project, the major project, and the capstone project, with the same objectives, tools, and outcomes described in pages 5, 7, and 11. </p>
+        </div>
+      </div>
+      <div class="grid-3">
+        <article class="card">
+          <div class="mini">Mini Project</div>
+          <h3>File Transfer by FTP</h3>
+          <p><b>Mentor:</b> Mr. Chaitanya Patil</p>
+          <p><b>Team Size:</b> 3</p>
+          <p><b>Key Skills:</b> Python, HTML, CSS, JavaScript</p>
+          <p><b>Objective:</b> To develop a secure and efficient file transfer system over a network.</p>
+          <p><b>Summary:</b> Built a file transfer system with encryption protection using Python, Flask, and socket programming. The interface supports file selection, transfer control, and progress monitoring.</p>
+        </article>
+        <article class="card">
+          <div class="mini">Major Project</div>
+          <h3>Sales Prediction and Demand Forecasting Using Footfall</h3>
+          <p><b>Team Size:</b> 4</p>
+          <p><b>Key Skills:</b> Python, Data Analysis, Predictive Analytics, Machine Learning, EDA, Scikit-Learn</p>
+          <p><b>Objective:</b> To predict future sales demand using customer footfall and historical trends.</p>
+          <p><b>Summary:</b> Built a machine-learning forecasting system using historical sales data, seasonal patterns, and customer behavior. Worked on preprocessing, feature engineering, and model training using Python and Scikit-learn.</p>
+        </article>
+        <article class="card">
+          <div class="mini">Capstone Project</div>
+          <h3>College Event Management System</h3>
+          <p><b>Key Skills:</b> Web Development, DBMS, Python, API, JavaScript, Machine Learning</p>
+          <p><b>Objective:</b> To create an AI-powered system for smarter event participation and management.</p>
+          <p><b>Summary:</b> Developed an event recommendation platform that suggests events based on student interests and behavior. The system improves visibility, engagement, personalized notifications, and real-time updates.</p>
+        </article>
+      </div>
+
+      <div style="height:18px"></div>
+      <div class="gallery">
+        <div class="shot"><img src="assets/page_6.png" alt="Mini project UI screenshot"><div class="cap">Mini Project UI (page 6)</div></div>
+        <div class="shot"><img src="assets/page_8.png" alt="Major project dashboard screenshot 1"><div class="cap">Major Project UI (page 8)</div></div>
+        <div class="shot"><img src="assets/page_9.png" alt="Major project dashboard screenshot 2"><div class="cap">Major Project UI (page 9)</div></div>
+        <div class="shot"><img src="assets/page_10.png" alt="Major project analytics screenshot 3"><div class="cap">Major Project UI (page 10)</div></div>
+      </div>
+    </section>
+
+    <section id="internships">
+      <div class="section-head">
+        <div>
+          <h2>Internships</h2>
+          <p>The internship experiences are based on pages 13 and 14, and I shaped them into matching cards for a cleaner digital presentation. </p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <article class="card">
+          <div class="mini">Virtual Internship</div>
+          <h3>AICTE AI/ML Virtual Internship</h3>
+          <p><b>Industry:</b> E-Learning / EdTech</p>
+          <p><b>Key Skills:</b> Problem Solving, Critical Thinking, Machine Learning, Python</p>
+          <p><b>Summary:</b> Worked on Python-based machine-learning modules through a structured development workflow. Responsibilities included data preprocessing, feature engineering, model evaluation, debugging, and performance improvement.</p>
+        </article>
+        <article class="card">
+          <div class="mini">Virtual Internship</div>
+          <h3>AICTE Data Analytics & Process Automation</h3>
+          <p><b>Industry:</b> E-Learning / EdTech</p>
+          <p><b>Key Skills:</b> SQL, Database Management, Data Analysis, Visualization</p>
+          <p><b>Summary:</b> Focused on automating data analysis and reporting workflows using SQL and scripting. Designed reusable queries, managed structured datasets, and documented processes to improve efficiency, consistency, and reporting speed.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="certifications">
+      <div class="section-head">
+        <div>
+          <h2>Certifications</h2>
+          <p>This section includes the certification list from pages 15 to 19 along with the certificate visuals where available. </p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Cisco Certified Network Associate (CCNA)</h3>
+          <p>Built a strong foundation in networking and security concepts including routing, switching, IP addressing, and secure data communication across IT infrastructure.</p>
+          <div style="margin-top:12px"><img src="assets/page_16.png" alt="CCNA certificate" style="width:100%; border-radius:18px; border:1px solid var(--line);"></div>
+        </div>
+        <div class="card">
+          <h3>MERN Stack Application Development</h3>
+          <p><b>Key Skills:</b> ReactJS, Node.js, MongoDB</p>
+          <p>Completed a practical MERN stack program and developed a Doctor’s Portal platform for managing schedules of doctors and patients online.</p>
+          <div style="margin-top:12px"><img src="assets/page_17.png" alt="Oracle Dev Gym certificate" style="width:100%; border-radius:18px; border:1px solid var(--line);"></div>
+        </div>
+        <div class="card">
+          <h3>Databases for Developers: Foundations</h3>
+          <p><b>Key Skills:</b> SQL</p>
+          <p>Completed Oracle DevGym certification focused on relational databases and SQL. Learned query writing, joins, filtering, sorting, aggregation, and efficient data handling techniques.</p>
+          <div style="margin-top:12px"><img src="assets/page_18.png" alt="AWS Academy badge" style="width:100%; border-radius:18px; border:1px solid var(--line);"></div>
+        </div>
+        <div class="card">
+          <h3>AWS Academy Graduate - Cloud Architecting</h3>
+          <p>Training badge, 60 hours, issued on 05/04/2025.</p>
+          <div style="margin-top:12px"><img src="assets/page_19.png" alt="Junior Cybersecurity Analyst certificate" style="width:100%; border-radius:18px; border:1px solid var(--line);"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="thankyou">Thank You</div>
+    </section>
+
+  </div>
+</body>
+</html>
